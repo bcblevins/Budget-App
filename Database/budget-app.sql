@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS "income" CASCADE;
 CREATE TABLE "transaction" (
 	"id" SERIAL PRIMARY KEY,
 	"amount" DECIMAL(8,2) NOT NULL,
-	"source" varchar(250) NOT NULL,
+	"description" varchar(250) NOT NULL,
 	"date" TIMESTAMP DEFAULT current_timestamp
 );
 
