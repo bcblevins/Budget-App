@@ -1,16 +1,19 @@
 package com.blevins.BudgetApp.daos;
 
 import com.blevins.BudgetApp.models.Transaction;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Component
 public class TransactionDao {
     private final JdbcTemplate jdbcTemplate;
+
     public TransactionDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -23,21 +26,30 @@ public class TransactionDao {
         );
     }
 
-    public Transaction getAll() {
-        return jdbcTemplate.queryForObject(
+    public List<Transaction> getAll() {
+        return jdbcTemplate.query(
                 "SELECT * FROM transaction",
                 this::mapToTransaction
         );
     }
 
     public Transaction create(Transaction transaction) {
-        return jdbcTemplate.queryForObject(
-                "INSERT INTO transaction (amount, description, date) values (?, ?, ?)",
-                Transaction.class,
-                transaction.getAmount(),
-                transaction.getDescription(),
-                transaction.getDate()
-        );
+        Integer id = 0;
+        try {
+            id = jdbcTemplate.queryForObject(
+                    "INSERT INTO transaction (amount, description, date) values (?, ?, ?) RETURNING id;",
+                    Integer.class,
+                    transaction.getAmount(),
+                    transaction.getDescription(),
+                    transaction.getDate()
+            );
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("EmptyResultDataAccessException");
+        } catch (Exception e) {
+            System.out.println("Exception");
+        }
+
+        return get(id);
     }
 
     public Transaction update(Transaction transaction) {
@@ -50,10 +62,10 @@ public class TransactionDao {
         return get(transaction.getId());
     }
 
-    public boolean delete(Transaction transaction) {
+    public boolean delete(int id) {
         return jdbcTemplate.update(
                 "DELETE FROM transaction WHERE id = ?",
-                transaction.getId()
+                id
         ) == 1;
     }
 
