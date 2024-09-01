@@ -69,6 +69,7 @@ public class TransactionDao {
         ) == 1;
     }
 
+    // Mappring method
     private Transaction mapToTransaction(ResultSet rs, int rowNum) throws SQLException {
         Transaction transaction = new Transaction();
         transaction.setId(rs.getInt("id"));
