@@ -40,3 +40,6 @@ insert into income ("name", amount, is_monthly, times_per_month, weeks_per_perio
 	('Beth', 1200.00, true, 2, null),
 	('Beau', 1000.00, false, null, 2),
 	('Freelance', 100.00, false, 4, 1);
+
+INSERT INTO "transaction" ("amount", "description") VALUES
+    (99.00, 'Food Lion');
