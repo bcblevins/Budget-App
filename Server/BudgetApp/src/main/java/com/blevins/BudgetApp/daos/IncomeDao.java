@@ -3,6 +3,7 @@ package com.blevins.BudgetApp.daos;
 import com.blevins.BudgetApp.models.Income;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,6 +73,7 @@ public class IncomeDao {
     public Income mapToIncome(ResultSet rs, int rowNum) throws SQLException {
         Income income = new Income();
         income.setId(rs.getInt("id"));
+        income.setName(rs.getString("name"));
         income.setAmount(rs.getBigDecimal("amount"));
         income.setMonthly(rs.getBoolean("is_monthly"));
         income.setTimesPerMonth(rs.getInt("times_per_month"));

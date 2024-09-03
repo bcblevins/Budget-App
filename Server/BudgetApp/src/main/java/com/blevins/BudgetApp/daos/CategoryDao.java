@@ -4,6 +4,7 @@ import com.blevins.BudgetApp.models.Category;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,11 +37,10 @@ public class CategoryDao {
         Integer id = 0;
         try {
             id = jdbcTemplate.queryForObject(
-                    "INSERT INTO category (name, amount_assigned, amount_spent) values (?,?,?) RETURNING id;",
+                    "INSERT INTO category (name, amount_assigned values (?,?) RETURNING id;",
                     Integer.class,
                     category.getName(),
-                    category.getAmountAssigned(),
-                    category.getAmountSpent()
+                    category.getAmountAssigned()
             );
         } catch (EmptyResultDataAccessException e) {
             System.out.println("EmptyResultDataAccessException");
@@ -53,10 +53,9 @@ public class CategoryDao {
 
     public Category update(Category category) {
         int rowsAffected = jdbcTemplate.update(
-                "UPDATE category SET name = ?, amount_assigned = ?, amount_spent = ? WHERE id = ?",
+                "UPDATE category SET name = ?, amount_assigned = ? WHERE id = ?",
                 category.getName(),
                 category.getAmountAssigned(),
-                category.getAmountSpent(),
                 category.getId()
         );
         if (rowsAffected == 0) {
@@ -77,6 +76,7 @@ public class CategoryDao {
         Category category = new Category();
         category.setId(rs.getInt("id"));
         category.setName(rs.getString("name"));
+        category.setAmountAssigned(rs.getBigDecimal("amount_assigned"));
         return category;
     }
 }

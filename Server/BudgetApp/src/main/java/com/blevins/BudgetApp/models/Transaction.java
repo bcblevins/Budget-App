@@ -17,4 +17,5 @@ public class Transaction {
     private BigDecimal amount;
     private String description;
     private LocalDateTime date;
+    private int categoryId;
 }

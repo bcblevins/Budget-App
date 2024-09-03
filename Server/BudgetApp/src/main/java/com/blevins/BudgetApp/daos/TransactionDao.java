@@ -37,11 +37,12 @@ public class TransactionDao {
         Integer id = 0;
         try {
             id = jdbcTemplate.queryForObject(
-                    "INSERT INTO transaction (amount, description, date) values (?, ?, ?) RETURNING id;",
+                    "INSERT INTO transaction (amount, description, date, category_id) values (?, ?, ?, ?) RETURNING id;",
                     Integer.class,
                     transaction.getAmount(),
                     transaction.getDescription(),
-                    transaction.getDate()
+                    transaction.getDate(),
+                    transaction.getCategoryId()
             );
         } catch (EmptyResultDataAccessException e) {
             System.out.println("EmptyResultDataAccessException");
@@ -54,10 +55,11 @@ public class TransactionDao {
 
     public Transaction update(Transaction transaction) {
         int rowsAffected = jdbcTemplate.update(
-                "UPDATE transaction (amount, description, date) WHERE id = ?",
+                "UPDATE transaction (amount, description, date, category_id) WHERE id = ?",
                 transaction.getAmount(),
                 transaction.getDescription(),
-                transaction.getDate()
+                transaction.getDate(),
+                transaction.getCategoryId()
         );
         return get(transaction.getId());
     }
@@ -76,6 +78,7 @@ public class TransactionDao {
         transaction.setAmount(rs.getBigDecimal("amount"));
         transaction.setDescription(rs.getString("description"));
         transaction.setDate(rs.getTimestamp("date").toLocalDateTime());
+        transaction.setCategoryId(rs.getInt("category_id"));
         return transaction;
     }
 }

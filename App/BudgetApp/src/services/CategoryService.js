@@ -5,19 +5,19 @@ const http = axios.create({
 })
 
 export default {
-    getCategories() {
+    getAll() {
         return http.get('/categories');
     },
-    getCategory(id) {
+    get(id) {
         return http.get(`/categories/${id}`);
     },
-    createCategory(category) {
+    create(category) {
         return http.post('/categories', category);
     },
-    updateCategory(category) {
+    update(category) {
         return http.put(`/categories/${category.id}`, category);
     },
-    deleteCategory(id) {
+    delete(id) {
         return http.delete(`/categories/${id}`);
     }
 }

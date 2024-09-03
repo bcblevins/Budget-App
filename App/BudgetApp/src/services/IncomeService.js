@@ -5,19 +5,19 @@ const http = axios.create({
 })
 
 export default {
-    getIncomes() {
+    getAll() {
         return http.get('/incomes');
     },
-    getIncome(id) {
+    get(id) {
         return http.get(`/incomes/${id}`);
     },
-    createIncome(income) {
+    create(income) {
         return http.post('/incomes', income);
     },
-    updateIncome(income) {
+    update(income) {
         return http.put(`/incomes/${income.id}`, income);
     },
-    deleteIncome(id) {
+    delete(id) {
         return http.delete(`/incomes/${id}`);
     }
 }
