@@ -5,14 +5,12 @@
                 <tr>
                     <th>Name</th>
                     <th>Assigned</th>
-                    <th>Spent</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="category in categories" v-bind:key="category.id">
                     <td>{{ category.name }}</td>
                     <td>{{ "$" + category.amountAssigned }}</td>
-                    <td>{{ "$" + category.amountSpent }}</td>
                 </tr>
             </tbody>
         </table>

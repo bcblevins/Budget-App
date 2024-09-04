@@ -37,10 +37,11 @@ public class CategoryDao {
         Integer id = 0;
         try {
             id = jdbcTemplate.queryForObject(
-                    "INSERT INTO category (name, amount_assigned values (?,?) RETURNING id;",
+                    "INSERT INTO category (name, amount_assigned, group_id) values (?,?,?) RETURNING id;",
                     Integer.class,
                     category.getName(),
-                    category.getAmountAssigned()
+                    category.getAmountAssigned(),
+                    category.getGroupId()
             );
         } catch (EmptyResultDataAccessException e) {
             System.out.println("EmptyResultDataAccessException");
@@ -53,9 +54,10 @@ public class CategoryDao {
 
     public Category update(Category category) {
         int rowsAffected = jdbcTemplate.update(
-                "UPDATE category SET name = ?, amount_assigned = ? WHERE id = ?",
+                "UPDATE category SET name = ?, amount_assigned = ?, group_id = ? WHERE id = ?",
                 category.getName(),
                 category.getAmountAssigned(),
+                category.getGroupId(),
                 category.getId()
         );
         if (rowsAffected == 0) {
@@ -77,6 +79,7 @@ public class CategoryDao {
         category.setId(rs.getInt("id"));
         category.setName(rs.getString("name"));
         category.setAmountAssigned(rs.getBigDecimal("amount_assigned"));
+        category.setGroupId(rs.getInt("group_id"));
         return category;
     }
 }

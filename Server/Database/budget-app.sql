@@ -1,9 +1,16 @@
 DROP TABLE IF EXISTS "transaction" CASCADE;
 DROP TABLE IF EXISTS "category" CASCADE;
 DROP TABLE IF EXISTS "income" CASCADE;
+DROP TABLE IF EXISTS "group" CASCADE;
+
+CREATE TABLE "group" (
+    "id" SERIAL PRIMARY KEY,
+    "name" VARCHAR(250) NOT NULL
+);
 
 CREATE TABLE "category" (
 	"id" SERIAL PRIMARY KEY,
+    "group_id" INTEGER REFERENCES "group" ("id") ON DELETE CASCADE,
 	"name" VARCHAR(250) NOT NULL,
 	"amount_assigned" DECIMAL(8,2) NOT NULL
 );
@@ -25,16 +32,21 @@ CREATE TABLE "transaction" (
 	"date" TIMESTAMP DEFAULT current_timestamp
 );
 
-insert into category ("name", amount_assigned) VALUES
-	('Internet', 99.00),
-	('Electricity', 150.00),
-	('Water', 50.00),
-	('Groceries', 300.00),
-	('Gas', 50.00),
-	('Rent', 1500.00),
-	('Car Insurance', 100.00),
-	('Phone', 50.00),
-	('Miscellaneous', 100.00);
+insert into "group" ("name") VALUES
+    ('Bills'),
+    ('Needs'),
+    ('Wants');
+
+insert into category ("name", amount_assigned, group_id) VALUES
+	('Internet', 99.00, 1),
+	('Electricity', 150.00, 1),
+	('Water', 50.00, 1),
+	('Groceries', 300.00, 2),
+	('Gas', 50.00, 2),
+	('Rent', 1500.00, 1),
+	('Car Insurance', 100.00, 1),
+	('Phone', 50.00, 1),
+	('Subscriptions', 50.00, 3);
 
 insert into income ("name", amount, is_monthly, times_per_month, weeks_per_period) VALUES
 	('Beth', 1200.00, true, 2, null),
