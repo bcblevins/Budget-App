@@ -1,17 +1,15 @@
 <template>
     <div>
-        <table>
+        <table v-for="group in groups" :key="group.id">
             <thead>
-                <tr>
-                    <th>Name</th>
+                <tr >
+                    <td id="group-name">{{ group.name }}</td>
+                    <td id="group-assigned">{{ "$" + totalAssigned(group) }}</td>
+                    <td id="group-spent">{{ "$" + totalSpent(group) }}</td>
                 </tr>
             </thead>
-            <tbody v-for="group in groups" :key="group.id">
-                <tr >
-                    <td>{{ group.name }}</td>
-                    <td>{{ "$" + totalAssigned(group) }}</td>
-                    <td>{{ "$" + totalSpent(group) }}</td>
-                </tr>
+            <tbody >
+
                 <tr>
                     <td>
                         <CategoryList :categories="group.categories" />
@@ -29,10 +27,12 @@ import CategoryList from './CategoryList.vue';
 
 const props = defineProps({
     groups: {
-        type: Object,
+        type: Array,
         required: true
     }
 })
+
+const groups = ref(props.groups);
 
 const totalAssigned = (group) => {
     return group.categories.reduce((acc, category) => {
@@ -48,10 +48,37 @@ const totalSpent = (group) => {
     }, 0)
 }
 
+onMounted(() => {
+    console.log("Group list: ", groups.value);
+})
+
+
 
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
+    #group-name {
+        font-size: 1.5em;
+    }
+
+    #group-assigned, #group-spent {
+        font-size: 1.1em;
+    }
+
+    #group-assigned {
+        color: rgb(47, 85, 211);
+        font-weight: bold;
+        border-right: 2px solid black;
+        padding-right: 10px;
+    }
+
+    #group-spent {
+        color: rgb(78, 197, 98);
+        background-color: rgb(216, 224, 255);
+        font-weight: bold;
+        padding-right: 10px;
+    }
+
 
 </style>

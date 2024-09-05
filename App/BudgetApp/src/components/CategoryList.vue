@@ -14,7 +14,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <TransactionList :transactions="category.transactions" />
+                        <TransactionList v-if="!noTransactions(category)" :transactions="category.transactions" />
                     </td>
                 </tr>
 
@@ -33,6 +33,10 @@
             required: true
         }
     })
+    const noTransactions = (category) => {
+        console.log("Category: ", category);
+        return category.transactions.length === 0;
+    }
 
 
 </script>

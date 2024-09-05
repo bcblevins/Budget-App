@@ -7,23 +7,15 @@ const http = axios.create({
 })
 
 function createGroupTree(groups, categories, transactions) {
-    let groupTree = [];
-    groups.forEach(group => {
-        group.categories = [];
-        categories.forEach(category => {
-            category.transactions = [];
-            if (category.groupId == group.id) {
-                transactions.forEach(transaction => {
-                    if (transaction.categoryId == category.id) {
-                        category.transactions.push(transaction)
-                    }
-                })
-                group.categories.push(category)
+    const groupTree = [];
 
-            }
-        })
+    groups.forEach(group => {
+        group.categories = categories.filter(category => category.groupId === group.id);
+        group.categories.forEach(category => {
+            category.transactions = transactions.filter(transaction => transaction.categoryId === category.id);
+        });
         groupTree.push(group);
-    })
+    });
 
     return groupTree;
 }
@@ -55,7 +47,9 @@ export default {
             const transactionsResponse = await TransactionService.getAll();
             const transactions = transactionsResponse.data;
 
-            return createGroupTree(groups, categories, transactions);
+            let tree = createGroupTree(groups, categories, transactions);
+            console.log("Tree before returning: ", tree);
+            return tree;
         } catch (error) {
             console.error("Error fetching group tree: ", error);
         }

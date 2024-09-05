@@ -4,7 +4,7 @@
             Your Budget
         </h1>
 
-        <GroupList :groups="groups"/>
+        <GroupList v-if="!loading" :groups="groups" />
 
     </div>
 </template>
@@ -15,19 +15,20 @@ import GroupList from '@/components/GroupList.vue';
 import GroupService from '@/services/GroupService';
 
 const groups = ref([]);
+const loading = ref(true);
 
-const fetchGroupTree = () => {
-    GroupService.getGroupTree()
-        .then(response => {
-            groups.value = response.data
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
+const fetchGroupTree = async () => {
+    try{
+    let response = await GroupService.getGroupTree();
+    groups.value = response;
+    } catch (error) {
+        console.error(error);
+    } finally {
+        loading.value = false;
+    }
+};
 
 fetchGroupTree();
-
 
 
 

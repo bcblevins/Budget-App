@@ -1,20 +1,18 @@
 <template>
     <div>
         <table>
-            <thead>
+            <!-- <thead>
                 <tr>
                     <th>Description</th>
                     <th>Amount</th>
                     <th>Date</th>
-                    <th>Category ID</th>
                 </tr>
-            </thead>
+            </thead> -->
             <tbody>
                 <tr v-for="transaction in transactions" :key="transaction.id">
                     <td>{{ transaction.description }}</td>
                     <td>{{ "$" + transaction.amount }}</td>
                     <td>{{ new Date(transaction.date).toLocaleString() }}</td>
-                    <td> {{ transaction.categoryId }} </td>
                 </tr>
             </tbody>
         </table>
