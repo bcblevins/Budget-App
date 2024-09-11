@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/transactions")
-@CrossOriginnpm
+@CrossOrigin
 public class TransactionController {
     private final TransactionDao transactionDao;
 
