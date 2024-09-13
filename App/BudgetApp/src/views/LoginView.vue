@@ -1,6 +1,7 @@
 <template>
     <div>
         <form v-if="!isRegister">
+            <span v-show="passwordError.invalid">Incorrect email and/or password</span>
             <input type="text" placeholder="Email" v-model="email">
             <input type="password" placeholder="Password" v-model="password">
             <button type="submit" @click.prevent="login">Login</button>
@@ -8,8 +9,8 @@
         <span @click="isRegister = !isRegister">Register</span>
         <form v-if="isRegister">
             <input type="text" placeholder="Email" v-model="email">
-            <span v-show="passwordError.confirmation" >Passwords must match</span>
-            <span v-show="passwordError.lengthError" >Passwords must be 8 characters long</span>
+            <span v-show="passwordError.confirmation">Passwords must match</span>
+            <span v-show="passwordError.lengthError">Passwords must be 8 characters long</span>
             <input type="password" placeholder="Password" v-model="password">
             <input type="password" placeholder="Confirm Password" v-model="confirmPassword">
             <button type="submit" @click.prevent="register">Login</button>
@@ -20,6 +21,8 @@
 <script setup>
 import LoginService from '@/services/LoginService';
 import { ref } from 'vue';
+import { useUserStore } from '@/stores/user'
+import { useRouter } from 'vue-router';
 
 const email = ref('');
 const password = ref('');
@@ -27,11 +30,22 @@ const confirmPassword = ref('');
 const isRegister = ref(false);
 const passwordError = ref({
     confirmation: false,
-    lengthError: false
+    lengthError: false,
+    invalid: false
 });
 
-const login = () => {
-    LoginService.login(email.value, password.value)
+const userStore = useUserStore();
+const router = useRouter();
+
+const login = async () => {
+    passwordError.value.invalid = false;
+    try {
+        userStore.token = await LoginService.login(email.value, password.value);
+        console.log(userStore.token)
+        router.push('/')
+    } catch (error) {
+        passwordError.value.invalid = true;
+    }
 }
 
 const register = () => {

@@ -1,12 +1,11 @@
 <template>
     <div>
-        <BudgetPeek />
+        <AddCategory />
     </div>
 </template>
 
 <script setup>
-import BudgetPeek from '@/components/BudgetPeek.vue';
-
+import AddCategory from '@/components/AddCategory.vue';
 </script>
 
 <style lang="css" scoped>
