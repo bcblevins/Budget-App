@@ -40,8 +40,7 @@ const router = useRouter();
 const login = async () => {
     passwordError.value.invalid = false;
     try {
-        userStore.token = await LoginService.login(email.value, password.value);
-        console.log(userStore.token)
+        let data = await LoginService.login(email.value, password.value);
         router.push('/')
     } catch (error) {
         passwordError.value.invalid = true;
@@ -64,4 +63,6 @@ const register = () => {
 
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>
