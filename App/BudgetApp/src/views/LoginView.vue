@@ -21,7 +21,6 @@
 <script setup>
 import LoginService from '@/services/LoginService';
 import { ref } from 'vue';
-import { useUserStore } from '@/stores/user'
 import { useRouter } from 'vue-router';
 
 const email = ref('');
@@ -34,13 +33,12 @@ const passwordError = ref({
     invalid: false
 });
 
-const userStore = useUserStore();
 const router = useRouter();
 
 const login = async () => {
     passwordError.value.invalid = false;
     try {
-        let data = await LoginService.login(email.value, password.value);
+        await LoginService.login(email.value, password.value);
         router.push('/')
     } catch (error) {
         passwordError.value.invalid = true;

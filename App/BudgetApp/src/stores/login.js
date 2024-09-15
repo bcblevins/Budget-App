@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
-export const useUserStore = defineStore('user', {
+export const useLoginStore = defineStore('login', {
   state: () => ({
     accessToken: null,
     refreshToken: null
