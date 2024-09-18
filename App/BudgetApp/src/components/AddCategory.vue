@@ -28,7 +28,7 @@ const postCategory = async () => {
         name: name.value,
         amount_assigned: amount.value
     }
-    console.log(await categoryService.post(category));
+    await categoryService.post(category);
     await getCategories();
     name.value = '';
     amount.value = '';

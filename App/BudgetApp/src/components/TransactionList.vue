@@ -16,12 +16,9 @@
             <label for="need-percent"> Want </label>
             <input type="range" name="Need Percent" id="need-percent" min="0" max="100" v-model="needPercent">
             <label for="need-percent"> Need </label>
-            <button @click="postTransaction" >Add</button>
-
-
+            <button @click.prevent="postTransaction" >Add</button>
         </form>
 
-        
         <ul>
             <li v-for="transaction in transactions" :key="transaction.id">
                 {{
@@ -73,7 +70,6 @@ const getTransactions = async () => {
 
 const getCategories = async () => {
     categories.value = await categoryService.getAll();
-    console.log(categories.value)
 }
 
 const postTransaction = async () => {
