@@ -12,6 +12,7 @@
     #app-header {
         background-color: gray;
         padding: 10px;
+        height: 70px;
 
         h1 {
             text-align: center;
