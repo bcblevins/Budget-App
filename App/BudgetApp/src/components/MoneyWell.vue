@@ -1,6 +1,6 @@
 <template>
-    <div>
-        placeholder
+    <div id="money-well">
+        Money Well
     </div>
 </template>
 
@@ -8,6 +8,12 @@
 
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="css" scoped>
+    #money-well {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background-color: gray;
+        text-align: center;
+    }
 </style>

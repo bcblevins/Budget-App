@@ -6,28 +6,43 @@
         <input id="category" type="search" placeholder="Category" v-model="categoryId" >
         <input id="recurring" type="search" placeholder="Recurring" v-model="recurringId" >
         <input id="income" type="search" placeholder="Paycheck" v-model="incomeId">
-        <button class="add" >Add</button>
+        <button class="add" @click.prevent="postTransaction" >Add</button>
 
         <button class="back" @click.prevent="showForm = false">Back</button>
     </form>
     <div id="app-footer">
         <div></div>
-        <button @click="showForm = true" id="main-add">+</button>
+        <button @click="showForm = !showForm" id="main-add">+</button>
         <div></div>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import transactionService from '@/services/TransactionService';
 
 const amount = ref(null);
-const needPercent = ref(null);
+const needPercent = ref(0);
 const name = ref('')
 const categoryId = ref(null)
 const recurringId = ref(null);
 const incomeId = ref(null);
 
 const showForm = ref(false)
+
+const postTransaction = async () => {
+    let transaction = {
+        name: name.value,
+        amount: amount.value,
+        category_id: categoryId.value,
+        recurring_id: recurringId.value,
+        need_percent: needPercent.value,
+        income_id: incomeId.value
+    }
+
+    await transactionService.post(transaction)
+    showForm.value = false;
+}
 
 </script>
 
