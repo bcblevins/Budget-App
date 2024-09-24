@@ -36,7 +36,6 @@ const postCategory = async () => {
 
 const getCategories = async () => {
     categories.value = await categoryService.getAll();
-    console.log(categories.value)
 }
 
 const deleteCategory = async (category) => {

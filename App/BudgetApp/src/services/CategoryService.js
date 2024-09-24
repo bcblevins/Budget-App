@@ -14,6 +14,17 @@ export default {
     }
     return data;
   },
+  async get(id) {
+    const { data, error } = await supabase
+    .from(path)
+    .select('*')
+    .eq('id', id)
+    if (error) {
+      throw new Error(error.message)
+    }
+    console.log("get: " + id)
+    return data;  
+  },
   async post(category) {
     const { data, error } = await supabase
     .from(path)
@@ -36,5 +47,23 @@ export default {
     }
 
     return data
+  },
+  async incrementAmountSpent(id, amount) {
+    console.log('id: ' + id, 'amount: ' + amount)
+    const category = await this.get(id);
+    console.log('category: ' + category.amount_spent);
+    const newAmount = Number(category.amount_spent) + Number(amount);
+    console.log('new amount: ' + newAmount)
+
+    const { data, error } = await supabase
+    .from(path)
+    .update({ amount_spent: newAmount })
+    .eq('id', id)
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    return data;
   }
 }

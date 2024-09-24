@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import supabaseCreds from '@/stores/supabaseCreds'
+import categoryService from './CategoryService';
 
 const supabase = createClient(supabaseCreds.url, supabaseCreds.key)
 const path = 'transactions';
@@ -22,7 +23,10 @@ export default {
     if (error) {
       throw new Error(error.message)
     }
-    console.log(data)
+
+    // update associated category amount_spent
+    categoryService.incrementAmountSpent(transaction.category_id, transaction.amount)
+    
     return data
   },
   async delete(id) {

@@ -5,7 +5,7 @@
             <input type="text" placeholder="0.00" v-model="amount" >
             <select name="category" id="category-select" v-model="categorySelection">
                 <option disabled hidden value="0">Category...</option>
-                <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name + ": $" + ( category.amount_assigned - totalSpent(category.id) ) }}</option>
+                <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name + ": $" + ( category.amount_assigned - category.amount_spent ) }}</option>
             </select>
             <input type="checkbox" id="is-recurring" v-model="isRecurring">
             <label for="is-recurring"> Recurring </label>
@@ -81,7 +81,7 @@ const postTransaction = async () => {
         recurring_id: recurringSelection.value == 0 ? null : recurringSelection.value,
         income_id: incomeSelection.value == 0 ? null : incomeSelection.value
     }
-    console.log(await transactionService.post(transaction));
+    await transactionService.post(transaction);
     await Promise.all([getTransactions(), getCategories()]);
 }
 
