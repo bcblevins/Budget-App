@@ -1,7 +1,5 @@
-import supabaseCreds from "@/stores/supabaseCreds";
-import { createClient } from "@supabase/supabase-js";
+import supabase from "./SupabaseService"
 
-const supabase = createClient(supabaseCreds.url, supabaseCreds.key)
 const path = 'groups'
 
 export default {

@@ -1,8 +1,5 @@
-import { createClient } from '@supabase/supabase-js'
-import supabaseCreds from "@/stores/supabaseCreds";
+import supabase from './SupabaseService';
 import { useLoginStore } from '@/stores/login';
-
-const supabase = createClient(supabaseCreds.url, supabaseCreds.key)
 
 
 export default {

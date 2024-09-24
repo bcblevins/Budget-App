@@ -1,7 +1,5 @@
-import { createClient } from '@supabase/supabase-js'
-import supabaseCreds from '@/stores/supabaseCreds'
+import supabase from "./SupabaseService";
 
-const supabase = createClient(supabaseCreds.url, supabaseCreds.key)
 const path = 'categories';
 
 export default {
@@ -22,8 +20,8 @@ export default {
     if (error) {
       throw new Error(error.message)
     }
-    console.log("get: " + id)
-    return data;  
+    console.log(data)
+    return data[0];  
   },
   async post(category) {
     const { data, error } = await supabase
@@ -49,11 +47,10 @@ export default {
     return data
   },
   async incrementAmountSpent(id, amount) {
-    console.log('id: ' + id, 'amount: ' + amount)
     const category = await this.get(id);
-    console.log('category: ' + category.amount_spent);
     const newAmount = Number(category.amount_spent) + Number(amount);
-    console.log('new amount: ' + newAmount)
+
+    console.log(newAmount)
 
     const { data, error } = await supabase
     .from(path)

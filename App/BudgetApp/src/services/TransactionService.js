@@ -1,8 +1,6 @@
-import { createClient } from '@supabase/supabase-js'
-import supabaseCreds from '@/stores/supabaseCreds'
+import supabase from './SupabaseService';
 import categoryService from './CategoryService';
 
-const supabase = createClient(supabaseCreds.url, supabaseCreds.key)
 const path = 'transactions';
 
 export default {
@@ -16,6 +14,7 @@ export default {
     return data;
   },
   async post(transaction) {
+
     const { data, error } = await supabase
     .from(path)
     .insert(transaction)
@@ -25,7 +24,7 @@ export default {
     }
 
     // update associated category amount_spent
-    categoryService.incrementAmountSpent(transaction.category_id, transaction.amount)
+    await categoryService.incrementAmountSpent(transaction.category_id, transaction.amount)
     
     return data
   },

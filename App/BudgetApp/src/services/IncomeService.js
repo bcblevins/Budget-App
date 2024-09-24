@@ -1,7 +1,5 @@
-import { createClient } from '@supabase/supabase-js'
-import supabaseCreds from '@/stores/supabaseCreds'
+import supabase from "./SupabaseService";
 
-const supabase = createClient(supabaseCreds.url, supabaseCreds.key);
 const path = 'income'
 
 export default {
