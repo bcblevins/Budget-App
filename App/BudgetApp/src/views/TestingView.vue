@@ -1,6 +1,13 @@
 <template>
     <div>
-        <h1>Nothing to see here :)</h1>
+        <h2>Category</h2>
+        <AddCategory />
+        <h2>Income</h2>
+        <IncomeList />
+        <h2>Group</h2>
+        <GroupList />
+        <h2>Recurring</h2>
+        <RecurringList />
     </div>
 </template>
 
