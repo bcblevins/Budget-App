@@ -11,7 +11,7 @@
         </form>
         <ul>
             <li v-for="income in incomes" :key="income.id">
-                {{ income.name + ": $" + income.estimate }}
+                {{ income.name + ": $" + income.estimate + " | ID: " + income.id}}
                 <button @click="deleteIncome(income.id)" > X </button>
             </li>
         </ul>

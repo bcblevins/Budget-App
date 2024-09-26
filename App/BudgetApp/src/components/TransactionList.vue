@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form action="">
+        <form action="" v-if="false">
             <input type="text" placeholder="Payee" v-model="payee">
             <input type="text" placeholder="0.00" v-model="amount" >
             <select name="category" id="category-select" v-model="categorySelection">

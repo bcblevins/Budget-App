@@ -1,4 +1,5 @@
 <template>
+    <div id="footer-spacer" ></div>
     <form id="add-form" v-if="showForm" >
         <input id="amount" type="number" v-model="amount" placeholder="$0.00">
         <input id="need-percent" type="range" min="0" max="100" v-model="needPercent" >
@@ -31,6 +32,10 @@ const incomeId = ref(null);
 const showForm = ref(false)
 
 const postTransaction = async () => {
+    if (incomeId.value != null) {
+        amount.value = amount.value * -1;
+        needPercent.value = null;
+    }
     let transaction = {
         name: name.value,
         amount: amount.value,
@@ -47,6 +52,10 @@ const postTransaction = async () => {
 </script>
 
 <style lang="css" scoped>
+#footer-spacer {
+    height: 80px;
+}
+
 #add-form {
     display: grid;
     background-color: rgb(211, 211, 211);

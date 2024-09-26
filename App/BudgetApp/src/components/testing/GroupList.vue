@@ -6,7 +6,7 @@
         </form>
         <ul>
             <li v-for="group in groups" :key="group.id">
-                {{ group.name }}
+                {{ group.name + " | ID: " + group.id}}
             </li>
         </ul>
     </div>

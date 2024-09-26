@@ -8,6 +8,8 @@
         <GroupList />
         <h2>Recurring</h2>
         <RecurringList />
+        <h2>Transactions</h2>
+        <TransactionList />
     </div>
 </template>
 
@@ -16,6 +18,7 @@ import AddCategory from '@/components/testing/AddCategory.vue';
 import IncomeList from '@/components/testing/IncomeList.vue';
 import GroupList from '@/components/testing/GroupList.vue';
 import RecurringList from '@/components/testing/RecurringList.vue';
+import TransactionList from '@/components/TransactionList.vue';
 
 
 

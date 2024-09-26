@@ -9,7 +9,7 @@
 
         <ul>
             <li v-for="category in categories" :key="category.id" > 
-                {{ category.name + ": $" + category.amount_assigned }}
+                {{ category.name + ": $" + category.amount_assigned + " | ID: " + category.id}}
                 <button @click="deleteCategory(category)">X</button>
             </li>
         </ul>
@@ -35,6 +35,7 @@ const postCategory = async () => {
     await getCategories();
     name.value = '';
     amount.value = '';
+    groupId.value = '';
 }
 
 const getCategories = async () => {
